@@ -1,28 +1,21 @@
 <script setup lang="ts">
-import MainPanel from './components/MainPanel.vue'
 //@ts-ignore
 import { RetrowaveScene } from './assets/retrowave-scene/retrowave_scene.js'
 import Navbar from './components/Navbar.vue'
 import MusicPlayer from './components/MusicPlayer.vue';
+import Terminal from './components/Terminal.vue';
 let retrowave = new RetrowaveScene('src/assets/retrowave-scene/')
+//@ts-ignore
+window.retrowave = retrowave
 document.addEventListener("DOMContentLoaded", loadComplete)
 function loadComplete() { retrowave.prepareScene(false, true) }
-let speedIncrement = 15
-window.addEventListener('wheel', (e) => {
-	if (e.deltaY < 0)
-		speedIncrement += 0.1
-	else if (e.deltaY > 0)
-		speedIncrement -= 0.1
-
-	retrowave.setAnimationSpeed(speedIncrement)
-})
-
 </script>
 
 <template>
-	<Navbar></Navbar>
-	<MainPanel></MainPanel>
-	<MusicPlayer></MusicPlayer>
+	<Navbar />
+	<router-view/>
+	<MusicPlayer />
+	<Terminal />
 </template>
 
 <style>
@@ -38,6 +31,7 @@ body {
 	background-color: #01001e;
 	color: #FFF;
 	cursor: url('src/assets/cursor.png'), auto;
+	overflow: hidden;
 }
 
 #retrowaveScene {

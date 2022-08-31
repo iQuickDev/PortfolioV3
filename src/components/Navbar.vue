@@ -4,9 +4,9 @@
 
 <template>
 <nav>
-<h3>Projects</h3>
-<h3>Personal</h3>
-<h3>Skills</h3>
+<h3 @click="$router.push('/projects')">Projects</h3>
+<h3 @click="$router.push('/about')">About</h3>
+<h3 @click="$router.push('/skills')">Skills</h3>
 <h3>Media</h3>
 </nav>
 </template>

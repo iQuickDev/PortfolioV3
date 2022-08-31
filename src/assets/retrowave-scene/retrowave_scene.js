@@ -53,7 +53,7 @@ export var RetrowaveScene = function (scenePath) {
 	// As for the skybox, for some odd reason, 2048 are heavier than 4096 in file weight, but use less ressource... 1024 textures are really hugly, use only if required
 	this.textureResolution = 2048; // Could make this dynamically editable later on
 
-	// RESSOURCES
+	// RESOURCES
 	// You can set all SVG files you want to load in this array...
 	this.svgFiles = [
 		[`./${this.scenePath}scenery/sun.svg`, 0, 40, -500, 0.11, "sun"],
@@ -70,7 +70,7 @@ export var RetrowaveScene = function (scenePath) {
 		`./${this.scenePath}skybox/${this.textureResolution}/nz.png`, // Z-
 	];
 
-	// POSITION HISTORY (avoid overlaping geometries)
+	// POSITION HISTORY (avoid overlapping geometries)
 	this.positionHistory = [];
 
 	// MATERIAL ARRAY (store all shaders)
@@ -113,9 +113,9 @@ export var RetrowaveScene = function (scenePath) {
 		75,
 		window.innerWidth / window.innerHeight,
 		0.1,
-		2000
+		1000
 	);
-	this.camera.position.set(0, 1.8, 7);
+	this.camera.position.set(0, 2.5, 7);
 	this.camera.lookAt(this.scene.position);
 	this.scene.add(this.camera);
 };
@@ -269,7 +269,7 @@ RetrowaveScene.prototype.setPostProcessing = function () {
  * Add the floor (grid) to the scene
  */
 RetrowaveScene.prototype.addFloor = function () {
-	let floorGeometry = new THREE.PlaneBufferGeometry(300, 300, 0, 0);
+	let floorGeometry = new THREE.PlaneBufferGeometry(500, 500, 0, 0);
 	floorGeometry.translate(0, 110, 0);
 	floorGeometry.rotateX(-Math.PI * 0.5);
 	let floorMaterial = new THREE.MeshBasicMaterial({
@@ -693,7 +693,7 @@ RetrowaveScene.prototype.checkPositionHistory = function (
 /////////////////////////////////////////////////////////////////////////////////
 // PROCEDURAL SKY
 /////////////////////////////////////////////////////////////////////////////////
-// While looking better than the skybox bellow (generated from here), it's actually using much more ressource
+// While looking better than the skybox bellow (generated from here), it's actually using much more resources
 // For showcase, procedural sky might be prefered over the skybox, but for real life usage, use the skybox
 
 /**
@@ -1043,9 +1043,11 @@ RetrowaveScene.prototype.animate = function () {
 	this.target.y = (1 - this.mouse.y) * 0.0003;
 	//this.target.x = (1 - this.mouse.x) * 0.003;
 	//this.target.y = (1 - this.mouse.y) * 0.003;
-
-	this.camera.rotation.x += 0.05 * (this.target.y - this.camera.rotation.x);
-	this.camera.rotation.y += 0.05 * (this.target.x - this.camera.rotation.y);
+	if (!RetrowaveScene.prototype.isFlyingAway)
+	{
+		this.camera.rotation.x += 0.05 * (this.target.y - this.camera.rotation.x);
+		this.camera.rotation.y += 0.05 * (this.target.x - this.camera.rotation.y);
+	}
 };
 
 // REDUCE GLITCH PASS INTERVAL (by default it runs way too often)
@@ -1191,3 +1193,19 @@ RetrowaveScene.prototype.randomize = function (min, max, setting) {
 
 	return randomResult;
 };
+
+RetrowaveScene.prototype.flyAway = function () {
+	RetrowaveScene.prototype.isFlyingAway = true
+	let height = 1.8
+	let heightInterval = setInterval(() => {
+		if (height <= 1100)
+		{
+			if (height > 50)
+			RetrowaveScene.prototype.isFlyingAway = false
+			height += 5
+			this.camera.position.set(0, height, 7)
+		}
+		else
+			clearInterval(heightInterval)
+	}, 1)
+}

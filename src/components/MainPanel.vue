@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import GlitchedWriter from 'vue-glitched-writer'
 import profilePicture from '../assets/pfp.png'
 
@@ -15,7 +14,7 @@ const subtitles = [
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="mainpanel-wrapper">
     <img :src="profilePicture" alt="profile picture" />
     <div class="name-container">
       <h1>iQuick</h1>
@@ -37,7 +36,7 @@ h6 {
   padding: 0;
 }
 
-.wrapper {
+.mainpanel-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;

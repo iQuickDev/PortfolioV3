@@ -71,21 +71,27 @@ onMounted(() => {
     }
 
     animate()
+    attachKeybinds()
 
     player = YoutubePlayer('video-player', {
         width: 10,
         height: 10,
+        playerVars: {
+            autoplay: 0,
+        }
     })
-    player.loadVideoById(songs[songIndex.value].id)
+    player.loadVideoById(songs[songIndex.value].id, 0, '144p')
 })
 
-function calculateProgress() {
+function calculateProgress(): number {
     let percentage = (timeElapsed.value / songs[songIndex.value].duration) * 100
     if (percentage > 100) {
         percentage = 100
     }
     //@ts-ignore
     document.querySelector('.progress-bar-fill').style.width = percentage + '%'
+
+    return percentage
 }
 
 function renderTime(seconds: number): string {
@@ -96,7 +102,8 @@ function startTimeCounter(): void {
     //@ts-ignore
     setInterval(() => {
         timeElapsed.value += 1
-        calculateProgress()
+        if (calculateProgress() == 100)
+            forwards()
     }, 1000)
 }
 
@@ -142,53 +149,95 @@ function playSong() {
 
 function loadSong() {
     timeElapsed.value = 0
-    player?.loadVideoById(songs[songIndex.value].id).then(() => {
-        player?.playVideo()
-    })
+    player?.loadVideoById(songs[songIndex.value].id)
+}
+
+function attachKeybinds() {
+    document.onkeydown = (ev) => {
+        //@ts-ignore
+        if (ev.target.tagName.toLowerCase() == 'textarea')
+        return
+
+        switch (ev.key) {
+            case ' ':
+                playSong()
+                break
+            case 'ArrowRight':
+                forwards()
+                break
+            case 'ArrowLeft':
+                backwards()
+                break
+            default:
+                return
+        }
+    }
 }
 </script>
 
 <template>
     <div class="wrapper">
-        <div class="song-container">
-            <div class="controls-container">
-                <div class="song-info">
-                    <h2 id="title">{{ songs[songIndex].title }}</h2>
-                    <h3 id="author">{{ songs[songIndex].author }}</h3>
+        <div class="player-wrapper">
+            <div class="song-container">
+                <div class="controls-container">
+                    <div class="song-info">
+                        <h2 id="title">{{  songs[songIndex].title  }}</h2>
+                        <h3 id="author">{{  songs[songIndex].author  }}</h3>
+                    </div>
+                    <div class="controls">
+                        <button>
+                            <font-awesome-icon @click="backwards" icon="fa-solid fa-backward" />
+                        </button>
+                        <button>
+                            <font-awesome-icon id="play" @click="playSong" icon="fa-play" v-show="!isPlaying" />
+                            <font-awesome-icon id="pause" @click="playSong" icon="fa-pause" v-show="isPlaying" />
+                        </button>
+                        <button>
+                            <font-awesome-icon @click="forwards" icon="fa-solid fa-forward" />
+                        </button>
+                    </div>
                 </div>
-                <div class="controls">
-                    <button>
-                        <font-awesome-icon @click="backwards" icon="fa-solid fa-backward" />
-                    </button>
-                    <button>
-                        <font-awesome-icon id="play" @click="playSong" icon="fa-play" v-show="!isPlaying" />
-                        <font-awesome-icon id="pause" @click="playSong" icon="fa-pause" v-show="isPlaying" />
-                    </button>
-                    <button>
-                        <font-awesome-icon @click="forwards" icon="fa-solid fa-forward" />
-                    </button>
+                <div class="player-animation">
                 </div>
             </div>
-            <div class="player-animation">
+            <div class="time">
+                <span id="timeElapsed">{{  renderTime(timeElapsed)  }}</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill"></div>
+                </div>
+                <span id="timeTotal">{{  renderTime(songs[songIndex].duration)  }}</span>
             </div>
+            <div id="video-player"></div>
         </div>
-        <div class="time">
-            <span id="timeElapsed">{{ renderTime(timeElapsed) }}</span>
-            <div class="progress-bar">
-                <div class="progress-bar-fill"></div>
-            </div>
-            <span id="timeTotal">{{ renderTime(songs[songIndex].duration) }}</span>
+        <div class="keybinds">
+            <ul class="keys">
+                <li>[Space] <br>
+                    <font-awesome-icon icon="fa-play" /> /
+                    <font-awesome-icon icon="fa-pause" />
+                </li>
+                <li>[←]
+                    <br>
+                    <font-awesome-icon icon="fa-backward" />
+                </li>
+                <li>[→]
+                    <br>
+                    <font-awesome-icon icon="fa-forward" />
+                </li>
+            </ul>
         </div>
-        <div id="video-player"></div>
     </div>
 </template>
 
 <style scoped>
 .wrapper {
     position: absolute;
+    display: flex;
     bottom: 1rem;
     left: 1rem;
-    background: url('https://thumbs.gfycat.com/AcidicWeirdAmericanavocet-size_restricted.gif') no-repeat;
+}
+
+.player-wrapper {
+    background: url('../assets/musicplayer-background.gif') no-repeat;
     background-size: cover;
     width: 20rem;
     height: 10rem;
@@ -297,5 +346,32 @@ h6 {
     background: #5900ff;
     box-shadow: 0 0 5px 1px #5900ff;
     border-radius: 5px;
+}
+
+.keybinds {
+    margin-left: 10px;
+    padding: 5px;
+    text-align: center;
+    width: 15%;
+    height: 100%;
+    background: #0005;
+    border-radius: 8px;
+    backdrop-filter: blur(3px);
+}
+
+.keys {
+    padding: 0;
+    list-style-type: none;
+    font-size: 1.1rem;
+}
+
+.keys li {
+    margin: 5px;
+}
+
+@media screen and (max-width: 600px) {
+    .wrapper {
+        display: none;
+    }
 }
 </style>

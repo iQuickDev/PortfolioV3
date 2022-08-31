@@ -13,9 +13,12 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "bootstrap-vue": "^2.22.0",
+    "interactjs": "^1.10.17",
     "three": "^0.143.0",
     "vue": "^3.2.37",
     "vue-glitched-writer": "^1.2.2",
+    "vue-router": "4",
+    "xterm": "^4.19.0",
     "youtube-player": "^5.5.2"
   },
   "devDependencies": {
