@@ -2,7 +2,7 @@
 import GlitchedWriter from 'vue-glitched-writer'
 import profilePicture from '../assets/pfp.png'
 
-const subtitles = [
+const subtitles: string[] = [
   "Fullstack Developer",
   "Arch Linux User",
   "TypeScript Lover",
@@ -15,6 +15,7 @@ const subtitles = [
 
 <template>
   <div class="mainpanel-wrapper">
+  <div class="romboid"></div>
     <img :src="profilePicture" alt="profile picture" />
     <div class="name-container">
       <h1>iQuick</h1>
@@ -26,16 +27,6 @@ const subtitles = [
 </template>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  padding: 0;
-}
-
 .mainpanel-wrapper {
   position: absolute;
   top: 50%;
@@ -44,10 +35,21 @@ h6 {
   height: 15rem;
   transform: translate(-50%, -50%);
   font-weight: 700;
-  border: 2px solid #e443de;
+  border: none;
   padding: 5rem;
   text-align: center;
   font-size: 1.4rem;
+}
+
+.romboid
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 4px solid #e443de;
 }
 
 .name-container
@@ -78,5 +80,13 @@ img
   border-radius: 50%;
   border: 2px solid #e443de;
   user-select: none;
+}
+
+@media screen and (max-width: 600px)
+{
+  .romboid
+  {
+    display: none;
+  }
 }
 </style>

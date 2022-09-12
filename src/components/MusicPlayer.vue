@@ -3,19 +3,13 @@
 import * as THREE from 'three'
 import { onMounted, ref } from 'vue'
 import YoutubePlayer from 'youtube-player'
-import { YouTubePlayer } from 'youtube-player/dist/types';
+import { YouTubePlayer } from 'youtube-player/dist/types'
+import { Song } from '../services/interfaces'
 
 let player: YouTubePlayer | null = null
 let timeElapsed = ref(0)
 const isPlaying = ref(false)
 const songIndex = ref(0)
-
-interface Song {
-    title: string
-    author: string
-    id: string
-    duration: number
-}
 
 const songs: Song[] = [
     {
@@ -81,6 +75,7 @@ onMounted(() => {
         }
     })
     player.loadVideoById(songs[songIndex.value].id, 0, '144p')
+    player.pauseVideo()
 })
 
 function calculateProgress(): number {
@@ -150,16 +145,18 @@ function playSong() {
 function loadSong() {
     timeElapsed.value = 0
     player?.loadVideoById(songs[songIndex.value].id)
+    if (!isPlaying.value)
+        player?.pauseVideo()
 }
 
 function attachKeybinds() {
-    document.onkeydown = (ev) => {
-        //@ts-ignore
-        if (ev.target.tagName.toLowerCase() == 'textarea')
-        return
+    document.addEventListener('keydown', (ev: KeyboardEvent) => {
+        if ((ev.target as HTMLElement).tagName.toLowerCase() == 'textarea')
+            return
 
         switch (ev.key) {
             case ' ':
+                console.log('playsong')
                 playSong()
                 break
             case 'ArrowRight':
@@ -171,18 +168,18 @@ function attachKeybinds() {
             default:
                 return
         }
-    }
+    })
 }
 </script>
 
 <template>
-    <div class="wrapper">
+    <div class="musicplayer-wrapper">
         <div class="player-wrapper">
             <div class="song-container">
                 <div class="controls-container">
                     <div class="song-info">
-                        <h2 id="title">{{  songs[songIndex].title  }}</h2>
-                        <h3 id="author">{{  songs[songIndex].author  }}</h3>
+                        <h2 id="title">{{ songs[songIndex].title }}</h2>
+                        <h3 id="author">{{ songs[songIndex].author }}</h3>
                     </div>
                     <div class="controls">
                         <button>
@@ -201,11 +198,11 @@ function attachKeybinds() {
                 </div>
             </div>
             <div class="time">
-                <span id="timeElapsed">{{  renderTime(timeElapsed)  }}</span>
+                <span id="timeElapsed">{{ renderTime(timeElapsed) }}</span>
                 <div class="progress-bar">
                     <div class="progress-bar-fill"></div>
                 </div>
-                <span id="timeTotal">{{  renderTime(songs[songIndex].duration)  }}</span>
+                <span id="timeTotal">{{ renderTime(songs[songIndex].duration) }}</span>
             </div>
             <div id="video-player"></div>
         </div>
@@ -229,11 +226,12 @@ function attachKeybinds() {
 </template>
 
 <style scoped>
-.wrapper {
+.musicplayer-wrapper {
     position: absolute;
     display: flex;
     bottom: 1rem;
     left: 1rem;
+    transition: .5s;
 }
 
 .player-wrapper {
@@ -369,8 +367,18 @@ h6 {
     margin: 5px;
 }
 
+@media screen and (max-width: 1300px)
+{
+    .musicplayer-wrapper
+    {
+        transform: scale(0.9);
+        left: 0;
+        bottom: 0;
+    }
+}
+
 @media screen and (max-width: 600px) {
-    .wrapper {
+    .musicplayer-wrapper {
         display: none;
     }
 }

@@ -408,6 +408,11 @@ glitched-writer@^2.0.29:
   resolved "https://registry.yarnpkg.com/glitched-writer/-/glitched-writer-2.0.29.tgz#36598b95e0aaa1148b5f6094e5be758f1b35d0ba"
   integrity sha512-ItmmiFTSKVIbs/ngTLAszsu2czKYXYar54GgJcST5U6BH7sAaivG3fgDJFDIgNaau7rGadV5bLu3QThd5iAC8w==
 
+gsap@^3.11.1:
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.11.1.tgz#2d99acf9c9ad02f3b6668bfab7567d31f217a91e"
+  integrity sha512-UKuJ0UPhntFHMwT6URFQ4cTQv88xc7Kd9Dhxt7qX9IPhC+d+/a5wKW5E5Vn33hZ53nBI1JfApcEbzKgXkcuPZw==
+
 has-flag@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-4.0.0.tgz#944771fd9c81c81265c4d6941860da06bb59479b"

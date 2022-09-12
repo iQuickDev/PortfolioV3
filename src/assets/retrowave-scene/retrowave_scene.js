@@ -1043,11 +1043,9 @@ RetrowaveScene.prototype.animate = function () {
 	this.target.y = (1 - this.mouse.y) * 0.0003;
 	//this.target.x = (1 - this.mouse.x) * 0.003;
 	//this.target.y = (1 - this.mouse.y) * 0.003;
-	if (!RetrowaveScene.prototype.isFlyingAway)
-	{
-		this.camera.rotation.x += 0.05 * (this.target.y - this.camera.rotation.x);
-		this.camera.rotation.y += 0.05 * (this.target.x - this.camera.rotation.y);
-	}
+
+	this.camera.rotation.x += 0.05 * (this.target.y - this.camera.rotation.x);
+	this.camera.rotation.y += 0.05 * (this.target.x - this.camera.rotation.y);
 };
 
 // REDUCE GLITCH PASS INTERVAL (by default it runs way too often)
@@ -1193,19 +1191,3 @@ RetrowaveScene.prototype.randomize = function (min, max, setting) {
 
 	return randomResult;
 };
-
-RetrowaveScene.prototype.flyAway = function () {
-	RetrowaveScene.prototype.isFlyingAway = true
-	let height = 1.8
-	let heightInterval = setInterval(() => {
-		if (height <= 1100)
-		{
-			if (height > 50)
-			RetrowaveScene.prototype.isFlyingAway = false
-			height += 5
-			this.camera.position.set(0, height, 7)
-		}
-		else
-			clearInterval(heightInterval)
-	}, 1)
-}

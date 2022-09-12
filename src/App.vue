@@ -34,6 +34,19 @@ body {
 	overflow: hidden;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+}
+
 #retrowaveScene {
 	position: absolute;
 	top: 0;
