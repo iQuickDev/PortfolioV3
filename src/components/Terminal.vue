@@ -106,13 +106,45 @@ let commands: Command[] = [
         description: 'Hack the page by allowing you to edit all the text',
         usage: 'hack',
         execute: (args: string[]) => {
+            if ((document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display == 'block')
+            return `${colors.red}Error: The page has been hacked already`
+
             let allElements = document.querySelectorAll('*')
 
             for (const element of allElements) {
                 element.setAttribute('contenteditable', 'true')
+                element.setAttribute('spellcheck', 'false')
             }
 
+            (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'block';
+            setTimeout(() => {
+                (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '.5';
+            }, 100)
+
             return `${colors.blue}Successfully hacked the page`
+        }
+    },
+    {
+        name: 'unhack',
+        description: 'Removes any traces of hacking',
+        usage: 'unhack',
+        execute: (args: string[]) => {
+            if ((document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display == 'none')
+            return `${colors.red}Error: The page has not been hacked (yet)`
+
+            let allElements = document.querySelectorAll('*')
+
+            for (const element of allElements) {
+                element.setAttribute('contenteditable', 'false')
+            }
+
+            (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '0';
+
+            setTimeout(() => {
+                (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'none';
+            }, 1000);
+
+            return `${colors.blue}Page unhacked, the cops won't be after you anymore`
         }
     },
     {

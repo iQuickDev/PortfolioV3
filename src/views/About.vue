@@ -13,6 +13,7 @@ import pfp from '../assets/pfp.png'
                 <ul>
                     <li>GitHub</li>
                     <li>Discord</li>
+                    <li>TODO: add icons</li>
                 </ul>
             </div>
         </div>
@@ -65,7 +66,6 @@ import pfp from '../assets/pfp.png'
     position: absolute;
     left: 0;
     bottom: 0;
-    background: red;
     width: 100%;
     height: 15%;
 }
