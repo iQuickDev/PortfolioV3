@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import MainPanel from '../components/MainPanel.vue';
+import MainPanel from '../components/MainPanel.vue'
 </script>
 
 <template>
-<MainPanel></MainPanel>
+<MainPanel/>
 </template>
 
 <style scoped>

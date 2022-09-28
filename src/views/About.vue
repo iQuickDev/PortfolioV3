@@ -61,8 +61,7 @@ import pfp from '../assets/pfp.png'
     padding: 5px;
 }
 
-.contacts
-{
+.contacts {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -70,8 +69,7 @@ import pfp from '../assets/pfp.png'
     height: 15%;
 }
 
-.contacts ul
-{
+.contacts ul {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -92,23 +90,19 @@ import pfp from '../assets/pfp.png'
     margin-bottom: 15px;
 }
 
-@media screen and (max-width: 1300px)
-{
-    .info
-    {
+@media screen and (max-width: 1300px) {
+    .info {
         left: 35vw;
         width: 60%;
     }
 
-    .personal
-    {
+    .personal {
         width: 30%;
     }
 }
 
-@media screen and (max-width: 800px)
-{
-
+@media screen and (max-width: 800px) {
+    /* todo */
 }
 
 @media screen and (max-width: 600px) {
