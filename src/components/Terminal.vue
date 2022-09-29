@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { onMounted } from "vue"
 import { Terminal } from 'xterm'
 import router from '../router/router'
 import interact from 'interactjs'
@@ -107,7 +107,7 @@ let commands: Command[] = [
         usage: 'hack',
         execute: (args: string[]) => {
             if ((document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display == 'block')
-            return `${colors.red}Error: The page has been hacked already`
+                return `${colors.red}Error: The page has been hacked already`
 
             let allElements = document.querySelectorAll('*')
 
@@ -130,7 +130,7 @@ let commands: Command[] = [
         usage: 'unhack',
         execute: (args: string[]) => {
             if ((document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display == 'none')
-            return `${colors.red}Error: The page has not been hacked (yet)`
+                return `${colors.red}Error: The page has not been hacked (yet)`
 
             let allElements = document.querySelectorAll('*')
 
@@ -188,6 +188,17 @@ let commands: Command[] = [
             return output
         }
     },
+    {
+        name: 'exit',
+        description: 'Toggle the terminal',
+        usage: 'exit',
+        execute: (args: string[]) =>
+        {
+            document.documentElement.focus()
+            document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}))
+            return `${colors.red}The terminal has been toggled off`
+        }
+    }
 ]
 
 function printWelcomeMessage(term: Terminal) {
@@ -280,7 +291,7 @@ onMounted(() => {
     printWelcomeMessage(term)
     term.write(data.shellprompt)
     term.onData(char => {
-        if (char.match('[A-Za-z0-9-. ]+')) { /* allow letters, digits, spaces and dashes and periods */
+        if (char.match('[A-Za-z0-9-. ]+')) { /* allow letters, digits, spaces, dashes and periods */
             if (char == '\u001b[A' || char == '\u001b[B' || char == '\u001b[C' || char == '\u001b[D') // disable arrow keys
                 return
             data.currentLine += char

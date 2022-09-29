@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import HorizontalDivider from '../components/HorizontalDivider.vue'
 import pfp from '../assets/pfp.png'
+import discord from '../assets/discord.png'
+import github from '../assets/github.png'
+import telegram from '../assets/telegram.png'
+import instagram from '../assets/instagram.png'
+import youtube from '../assets/youtube.png'
+
+//@ts-ignore
+let age: string = (Math.abs(new Date('2004-09-10T00:00:00+0100').getTime() - new Date().getTime()) / (1000 * 3600 * 24 * 365)).toFixed(0)
+
 </script>
 
 <template>
@@ -9,12 +18,24 @@ import pfp from '../assets/pfp.png'
             <h1>Personal</h1>
             <HorizontalDivider />
             <img class="pfp" :src="pfp">
+            <div class="data">
+                <p class="description">Hi, my name is Leonardo and i am a {{age}} years old Full Stack Developer based in Italy. Programming
+                    has been my
+                    passion since 2019 and i'm pursuing it by making lots of personal projects as well as school ones. I
+                    really enjoy exploring open source software like linux and GNU, i think that FOSS gives a lot of
+                    benefits to the community and the developers to build better software with the help from all over
+                    the world. Take a look at my skills on the panel to the right and my social networks right below
+                    this presentation.
+                </p>
+            </div>
             <div class="contacts">
-                <ul>
-                    <li>GitHub</li>
-                    <li>Discord</li>
-                    <li>TODO: add icons</li>
-                </ul>
+                <a href="https://github.com/iQuickDev" target="_target"><img id="github" :src="github"></a>
+                <a href="https://discordlookup.com/user/295310535107280908" target="_target"><img id="discord"
+                        :src="discord"></a>
+                <a href="https://web.telegram.org/k/#@iQuickDev" target="_target"><img id="telegram"
+                        :src="telegram"></a>
+                <a href="https://instagram.com/iquickdev" target="_target"><img id="instagram" :src="instagram"></a>
+                <a href="https://www.youtube.com/c/iQuickGaming/" target="_target"><img id="youtube" :src="youtube"></a>
             </div>
         </div>
         <div class="info container">
@@ -53,7 +74,10 @@ import pfp from '../assets/pfp.png'
     width: 22%;
     height: 60vh;
     left: 1rem;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .personal h1 {
@@ -62,17 +86,8 @@ import pfp from '../assets/pfp.png'
 }
 
 .contacts {
-    position: absolute;
-    left: 0;
-    bottom: 0;
     width: 100%;
     height: 15%;
-}
-
-.contacts ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
 }
 
 .info {
@@ -80,7 +95,15 @@ import pfp from '../assets/pfp.png'
     position: absolute;
     width: 70%;
     height: 80vh;
-    margin: auto auto auto auto;
+    margin: auto;
+}
+
+.description
+{
+    margin: auto;
+    width: 90%;
+    text-align: justify;
+    text-shadow: 0 0 1px #FFF;
 }
 
 .pfp {
@@ -90,7 +113,37 @@ import pfp from '../assets/pfp.png'
     margin-bottom: 15px;
 }
 
-@media screen and (max-width: 1300px) {
+.contacts img {
+    width: 20%;
+    transition: .5s;
+}
+
+.contacts img:hover {
+    transform: translateY(-5px);
+    transition: .5s;
+}
+
+#discord:hover {
+    filter: drop-shadow(-5px -5px 0px #4444dd);
+}
+
+#github:hover {
+    filter: drop-shadow(-5px -5px 0px #151515);
+}
+
+#telegram:hover {
+    filter: drop-shadow(-5px -5px 0px #4444dd);
+}
+
+#instagram:hover {
+    filter: drop-shadow(-5px -5px 0px #e443de);
+}
+
+#youtube:hover {
+    filter: drop-shadow(-5px -5px 0px #F00);
+}
+
+@media screen and (max-width: 1400px) {
     .info {
         left: 35vw;
         width: 60%;
@@ -99,10 +152,18 @@ import pfp from '../assets/pfp.png'
     .personal {
         width: 30%;
     }
+
+    .contacts {
+        width: 90%;
+        text-align: center;
+    }
 }
 
 @media screen and (max-width: 800px) {
-    /* todo */
+    .contacts {
+        width: 90%;
+        text-align: center;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -115,6 +176,12 @@ import pfp from '../assets/pfp.png'
         position: initial;
         width: 90%;
         margin-bottom: 15px;
+    }
+
+    .contacts {
+        bottom: 20px;
+        width: 90%;
+        text-align: center;
     }
 }
 </style>

@@ -13,15 +13,22 @@ window.retrowave = retrowave
 document.addEventListener("DOMContentLoaded", () => {
 	retrowave.prepareScene(false, true)
 })
+document.addEventListener("resize", () => {
+	adjustSize()
+})
 
 onBeforeMount(() => {
-	viewportSize.width = window.innerWidth
-	viewportSize.height = window.innerHeight
+	adjustSize()
 })
 
 let viewportSize = {
 	width: window.innerWidth,
 	height: window.innerHeight
+}
+
+function adjustSize() {
+	viewportSize.width = window.innerWidth
+	viewportSize.height = window.innerHeight
 }
 
 </script>
