@@ -1,25 +1,25 @@
 <script setup lang="ts">
 //@ts-ignore
 import { RetrowaveScene } from './assets/retrowave-scene/retrowave_scene.js'
+//@ts-ignore
+import VueMatrixRaindrop from 'vue-matrix-digit-rain'
 import Navbar from './components/Navbar.vue'
 import MusicPlayer from './components/MusicPlayer.vue'
 import Terminal from './components/Terminal.vue'
-import { onBeforeMount } from 'vue'
-//@ts-ignore
-import VueMatrixRaindrop from 'vue-matrix-digit-rain'
+import { onBeforeMount, ref } from 'vue'
 let retrowave = new RetrowaveScene('src/assets/retrowave-scene/')
-//@ts-ignore
+const refresher = ref(0)
+window.isHacked = false
 window.retrowave = retrowave
 document.addEventListener("DOMContentLoaded", () => {
 	retrowave.prepareScene(false, true)
-})
-document.addEventListener("resize", () => {
-	adjustSize()
 })
 
 onBeforeMount(() => {
 	adjustSize()
 })
+
+window.onresize = () => adjustSize()
 
 let viewportSize = {
 	width: window.innerWidth,
@@ -29,6 +29,13 @@ let viewportSize = {
 function adjustSize() {
 	viewportSize.width = window.innerWidth
 	viewportSize.height = window.innerHeight
+	refresher.value++
+	if (window.isHacked) {
+		(document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'block'
+		setTimeout(() => {
+			(document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '.5'
+		}, 100)
+	}
 }
 
 </script>
@@ -38,8 +45,8 @@ function adjustSize() {
 	<router-view />
 	<MusicPlayer />
 	<Terminal />
-	<VueMatrixRaindrop :backgroundColor="'rgba(0,0,0,0.1)'" :fontFamily="'Hack'" :speed="2"
-		:canvasWidth="viewportSize.width" :canvasHeight="viewportSize.height" :textColor="'#e443de'"
+	<VueMatrixRaindrop class="matrix" :key="refresher" :backgroundColor="'rgba(0,0,0,0.1)'" :fontFamily="'Hack'"
+		:speed="2" :canvasWidth="viewportSize.width" :canvasHeight="viewportSize.height" :textColor="'#e443de'"
 		:textContent="'ァィゥェォカキクケコサシスセソタチツテトナニヌネノパビピプペポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺ'" />
 </template>
 
@@ -55,8 +62,25 @@ body {
 	padding: 0;
 	background-color: #01001e;
 	color: #FFF;
-	cursor: url('src/assets/cursor.png'), auto;
+	cursor: url('src/assets/images/cursor.png'), auto;
 	overflow: hidden;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #e443de;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #5900ff;
 }
 
 h1,
@@ -79,7 +103,6 @@ h6 {
 	opacity: 0;
 	z-index: -1;
 	transition: 1s;
-	display: none;
 }
 
 #retrowaveScene {

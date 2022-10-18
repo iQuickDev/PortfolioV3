@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import HorizontalDivider from '../components/HorizontalDivider.vue'
-import pfp from '../assets/pfp.png'
-import discord from '../assets/discord.png'
-import github from '../assets/github.png'
-import telegram from '../assets/telegram.png'
-import instagram from '../assets/instagram.png'
-import youtube from '../assets/youtube.png'
+import pfp from '../assets/images/pfp.png'
+import discord from '../assets/images/discord.png'
+import github from '../assets/images/github.png'
+import telegram from '../assets/images/telegram.png'
+import instagram from '../assets/images/instagram.png'
+import youtube from '../assets/images/youtube.png'
 
 //@ts-ignore
 let age: string = (Math.abs(new Date('2004-09-10T00:00:00+0100').getTime() - new Date().getTime()) / (1000 * 3600 * 24 * 365)).toFixed(0)
@@ -78,6 +78,7 @@ let age: string = (Math.abs(new Date('2004-09-10T00:00:00+0100').getTime() - new
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    overflow: auto;
 }
 
 .personal h1 {

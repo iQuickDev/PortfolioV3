@@ -156,7 +156,6 @@ function attachKeybinds() {
 
         switch (ev.key) {
             case ' ':
-                console.log('playsong')
                 playSong()
                 break
             case 'ArrowRight':
@@ -235,7 +234,7 @@ function attachKeybinds() {
 }
 
 .player-wrapper {
-    background: url('../assets/musicplayer-background.gif') no-repeat;
+    background: url('../assets/images/musicplayer-background.gif') no-repeat;
     background-size: cover;
     width: 20rem;
     height: 10rem;

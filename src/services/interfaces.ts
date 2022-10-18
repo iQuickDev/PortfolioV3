@@ -27,3 +27,10 @@ export interface Song {
     id: string
     duration: number
 }
+
+declare global {
+    interface Window {
+        isHacked: boolean
+        retrowave: any
+    }
+}

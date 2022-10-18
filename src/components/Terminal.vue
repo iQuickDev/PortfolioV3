@@ -103,23 +103,18 @@ let commands: Command[] = [
     },
     {
         name: 'hack',
-        description: 'Hack the page by allowing you to edit all the text',
+        description: 'Hack the page',
         usage: 'hack',
         execute: (args: string[]) => {
-            if ((document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display == 'block')
-                return `${colors.red}Error: The page has been hacked already`
+            if (window.isHacked)
+                return `${colors.red}Error: The page has been hacked already` as string
 
-            let allElements = document.querySelectorAll('*')
-
-            for (const element of allElements) {
-                element.setAttribute('contenteditable', 'true')
-                element.setAttribute('spellcheck', 'false')
-            }
-
-            (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'block';
+            (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'block'
             setTimeout(() => {
-                (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '.5';
+                (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '.5'
             }, 100)
+
+            window.isHacked = true
 
             return `${colors.blue}Successfully hacked the page`
         }
@@ -129,20 +124,16 @@ let commands: Command[] = [
         description: 'Removes any traces of hacking',
         usage: 'unhack',
         execute: (args: string[]) => {
-            if ((document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display == 'none')
-                return `${colors.red}Error: The page has not been hacked (yet)`
+            if (!window.isHacked)
+                return `${colors.red}Error: The page has not been hacked (yet)` as string
 
-            let allElements = document.querySelectorAll('*')
-
-            for (const element of allElements) {
-                element.setAttribute('contenteditable', 'false')
-            }
-
-            (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '0';
+            (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '0'
 
             setTimeout(() => {
-                (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'none';
+                (document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'none'
             }, 1000);
+
+            window.isHacked = false
 
             return `${colors.blue}Page unhacked, the cops won't be after you anymore`
         }
