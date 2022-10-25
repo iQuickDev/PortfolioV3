@@ -56,18 +56,18 @@ export var RetrowaveScene = function (scenePath) {
 	// RESOURCES
 	// You can set all SVG files you want to load in this array...
 	this.svgFiles = [
-		[`./${this.scenePath}scenery/sun.svg`, 0, 40, -500, 0.11, "sun"],
-		[`./${this.scenePath}scenery/city_far.svg`, 0, 15, -450, 0.4, "cityFar"],
-		[`./${this.scenePath}scenery/city_close.svg`, 0, 28, -300, 0.2, "cityClose"],
+		[`./assets/retrowave-scene/scenery/sun.svg`, 0, 40, -500, 0.11, "sun"],
+		[`./assets/retrowave-scene/scenery/city_far.svg`, 0, 15, -450, 0.4, "cityFar"],
+		[`./assets/retrowave-scene/scenery/city_close.svg`, 0, 28, -300, 0.2, "cityClose"],
 	];
 	// ... and specify your skybox textures here
 	this.skybox = [
-		`./${this.scenePath}skybox/${this.textureResolution}/px.png`, // X+
-		`./${this.scenePath}skybox/${this.textureResolution}/nx.png`, // X-
-		`./${this.scenePath}skybox/${this.textureResolution}/py.png`, // Y+
-		`./${this.scenePath}skybox/${this.textureResolution}/invisible.png`, // Y- (out of camera FoV here)
-		`./${this.scenePath}skybox/${this.textureResolution}/invisible.png`, // Z+ (out of camera FoV here)
-		`./${this.scenePath}skybox/${this.textureResolution}/nz.png`, // Z-
+		`./assets/retrowave-scene/skybox/${this.textureResolution}/px.png`, // X+
+		`./assets/retrowave-scene/skybox/${this.textureResolution}/nx.png`, // X-
+		`./assets/retrowave-scene/skybox/${this.textureResolution}/py.png`, // Y+
+		`./assets/retrowave-scene/skybox/${this.textureResolution}/invisible.png`, // Y- (out of camera FoV here)
+		`./assets/retrowave-scene/skybox/${this.textureResolution}/invisible.png`, // Z+ (out of camera FoV here)
+		`./assets/retrowave-scene/skybox/${this.textureResolution}/nz.png`, // Z-
 	];
 
 	// POSITION HISTORY (avoid overlapping geometries)

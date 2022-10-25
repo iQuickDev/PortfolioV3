@@ -15,6 +15,7 @@
     "bootstrap-vue": "^2.22.0",
     "gsap": "^3.11.1",
     "interactjs": "^1.10.17",
+    "shake-detector": "^0.3.8",
     "three": "^0.143.0",
     "vue": "^3.2.37",
     "vue-glitched-writer": "^1.2.2",

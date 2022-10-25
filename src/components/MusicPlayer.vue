@@ -55,10 +55,12 @@ onMounted(() => {
         if (isPlaying.value) {
             object.rotation.x += 0.1
             object.rotation.y += 0.1
+            document.querySelector('.player-animation')?.classList.add('playing')
         }
         else {
             object.rotation.x += 0.01
             object.rotation.y += 0.01
+            document.querySelector('.player-animation')?.classList.remove('playing')
         }
         requestAnimationFrame(animate)
         renderer.render(scene, camera)
@@ -280,6 +282,11 @@ function attachKeybinds() {
     filter: drop-shadow(0 0 1px #0F0);
 }
 
+.playing
+{
+    animation: pulse .8s linear infinite;
+}
+
 .song-info {
     width: 100%;
     height: 60%;
@@ -366,10 +373,22 @@ h6 {
     margin: 5px;
 }
 
-@media screen and (max-width: 1300px)
-{
-    .musicplayer-wrapper
-    {
+@keyframes pulse {
+    0% {
+        transform: scale(.9);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(.9);
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .musicplayer-wrapper {
         transform: scale(0.9);
         left: 0;
         bottom: 0;

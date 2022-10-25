@@ -3,6 +3,7 @@
 import { RetrowaveScene } from './assets/retrowave-scene/retrowave_scene.js'
 //@ts-ignore
 import VueMatrixRaindrop from 'vue-matrix-digit-rain'
+import ShakeDetector from 'shake-detector';
 import Navbar from './components/Navbar.vue'
 import MusicPlayer from './components/MusicPlayer.vue'
 import Terminal from './components/Terminal.vue'
@@ -11,6 +12,30 @@ let retrowave = new RetrowaveScene('src/assets/retrowave-scene/')
 const refresher = ref(0)
 window.isHacked = false
 window.retrowave = retrowave
+
+new ShakeDetector({
+	threshold: 5,
+	debounceDelay: 50
+}).confirmPermissionGranted().subscribe(() => {
+	if (window.isHacked) {
+		(document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '0'
+
+		setTimeout(() => {
+			(document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'none'
+		}, 1000);
+
+		window.isHacked = false
+	}
+	else {
+		(document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.display = 'block'
+		setTimeout(() => {
+			(document.querySelector('#vue-matrix-raindrop') as HTMLElement).style.opacity = '.5'
+		}, 100)
+
+		window.isHacked = true
+	}
+}).start()
+
 document.addEventListener("DOMContentLoaded", () => {
 	retrowave.prepareScene(false, true)
 })
@@ -19,7 +44,7 @@ onBeforeMount(() => {
 	adjustSize()
 })
 
-window.onresize = () => adjustSize()
+window.addEventListener('resize', adjustSize)
 
 let viewportSize = {
 	width: window.innerWidth,
@@ -62,7 +87,7 @@ body {
 	padding: 0;
 	background-color: #01001e;
 	color: #FFF;
-	cursor: url('src/assets/images/cursor.png'), auto;
+	cursor: url('cursor.png'), auto;
 	overflow: hidden;
 }
 
